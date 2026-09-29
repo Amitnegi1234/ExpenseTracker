@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>User Management</h1>
+        <div class="form-container">
+            <h2>Add User</h2>
+            <form id="userForm">
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <br>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <p id="emailError"></p>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <br>
+                <button type="submit">Add User</button>
+            </form> 
+            <p class="switch-page">
+                Already have an account?
+                <a href="../login/index.html">Login</a>
+            </p>
+        </div>
+        <div class="users-container">
+            <h2>Users</h2>
+            <div class="users-heading">
+                <h3>Name</h3>
+                <h3>Email</h3>
+            </div>
+            <div id="usersList"></div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
