@@ -1,12 +1,16 @@
 const User=require('../models/userModel')
+const bcrypt=require('bcrypt')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 const addUser=async(req,res)=>{
     try {
         const {name,email,password}=req.body;
+        const hashPassword = await bcrypt.hash(password,10)
         const user=await User.create({
             name:name,
             email:email,
-            password:password
+            password:hashPassword
         })
         return res.status(201).json({
             message: 'User added successfully',
@@ -40,6 +44,10 @@ const getUser=async(req,res)=>{
     }
 }
 
+const generateAccesstoken=(id)=>{
+    return jwt.sign({userId : id}, process.env.JWT_SECRET)
+}
+
 const loginUser=async(req,res)=>{
     try {
         const {email,password}=req.body;
@@ -53,12 +61,14 @@ const loginUser=async(req,res)=>{
                 message:'email not found'
             })
         }
-        if(user.password!==password){
+        const comparePassword = await bcrypt.compare(password, user.password)
+        if(!comparePassword){
             return res.status(401).json({ message: 'Invalid password' });
         }
         return res.status(200).json({
             message:'login successfully',
-            user:user
+            user:user,
+            token:generateAccesstoken(user.id)
         })
     } catch (error) {
         console.log(error); 

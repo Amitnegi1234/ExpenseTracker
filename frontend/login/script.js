@@ -14,6 +14,8 @@ form.addEventListener('submit',async(e)=>{
             password:password
         })
         alert('login successfully')
+        localStorage.setItem('token',response.data.token)
+        window.location.href = '../expense/index.html';
         console.log(response.data);
     } catch (error) {
         if (error.response) {

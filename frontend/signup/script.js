@@ -16,10 +16,9 @@ form.addEventListener('submit', async (e) => {
 
     try {
         const response = await axios.post(`${api}/add`, user);
-        
-        getUsers();
+        alert('register successfully')
+        window.location.href = '../login/index.html';
         e.target.reset();
-
     } catch (error) {
 
         if (error.response && error.response.status === 409) {
@@ -30,42 +29,4 @@ form.addEventListener('submit', async (e) => {
         console.log(error);
     }
 });
-
-async function getUsers() {
-    try {
-        const response = await axios.get(`${api}/get`);
-        const users = response.data;
-
-        displayUser(users);
-
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-async function displayUser(users) {
-    try {
-        usersList.innerHTML = '';
-
-        users.forEach(user => {
-            const div = document.createElement('div');
-
-            div.classList.add('users-list');
-
-            div.innerHTML = `
-                <div class='user-detail'>
-                    <h3>${user.name}</h3>
-                    <p>${user.email}</p>
-                </div>
-            `;
-
-            usersList.appendChild(div);
-        });
-
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-getUsers();
 
