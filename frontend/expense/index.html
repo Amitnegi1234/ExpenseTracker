@@ -8,19 +8,41 @@
   </head>
   <body>
     <div class="container">
-      <div class="heading">
+      <div class="top-bar">
         <h1>Expense Tracker</h1>
+
+        <div class="premium-section">
+          <button id="buyPremiumBtn">Buy Premium</button>
+
+          <div id="premiumUserSection" hidden>
+            <span>You are a Premium User Now</span>
+            <button id="leaderboardBtn">Leaderboard</button>
+          </div>
+        </div>
       </div>
+
+      <p id="paymentMessage"></p>
       <div class="form-container">
         <form id="expenseForm">
           <div class="form-group">
             <label for="amount">Amount</label>
-            <input  type="number" name="amount" id="amount" placeholder="Enter amount"
-            required />
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              placeholder="Enter amount"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <input type="text" name="description" id="description" placeholder="Enter description" required />
+            <input
+              type="text"
+              name="description"
+              id="description"
+              placeholder="Enter description"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="category">Category</label>
@@ -39,7 +61,34 @@
         <h2>My Expenses</h2>
         <div id="expensesList"></div>
       </div>
+
+      <!-- Leaderboard -->
+      <div class="leaderboard-container" id="leaderboardContainer" hidden>
+        <div class="leaderboard-header">
+          <div>
+            <h2>Leaderboard</h2>
+            <p>Who's spending the most?</p>
+          </div>
+          <span class="leaderboard-badge">PREMIUM</span>
+        </div>
+
+        <div id="leaderboardMessage" class="leaderboard-message"></div>
+
+        <div class="leaderboard-table-wrapper">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>User</th>
+                <th>Total Expenses</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardList"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="index.js"></script>
   </body>

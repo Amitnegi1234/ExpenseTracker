@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cashfree Test Payment</title>
+
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+</head>
+
+<body>
+
+    <h1>Test Premium Payment</h1>
+
+    <button id="payButton">Pay ₹1</button>
+
+    <script>
+
+        const cashfree = Cashfree({
+            mode: "sandbox"
+        });
+
+        document.querySelector("#payButton").addEventListener("click", () => {
+            const paymentSessionId =
+                "session_JGO2PgT843DQeqLzkFBxXhaALLwEK1YUdWMfUQApK6YM8hFgj_q3eb5vAkyBxAvybRgE8hiq8K_yx1_CxHnsYrxpFKlbjR5m93ABlVLRC6eZgq1h1qQjebzh6Mkpayment";
+            cashfree.checkout({
+                paymentSessionId: paymentSessionId,
+                redirectTarget: "_self"
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

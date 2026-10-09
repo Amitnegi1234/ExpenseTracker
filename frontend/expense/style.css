@@ -145,6 +145,164 @@ button:hover {
     background-color: #b02a37;
 }
 
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.top-bar h1 {
+    margin: 0;
+}
+
+.premium-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#premiumUserSection {
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#premiumUserSection:not([hidden]) {
+    display: flex;
+}
+
+#buyPremiumBtn,
+#leaderboardBtn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #2563eb;
+    color: white;
+    font-size: 14px;
+}
+
+#paymentMessage {
+    margin-bottom: 15px;
+}
+
+
+/* Leaderboard */
+.leaderboard-container {
+    margin-top: 25px;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e5e7eb;
+}
+
+.leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.leaderboard-header h2 {
+    margin: 0 0 6px;
+    color: #111827;
+}
+
+.leaderboard-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.leaderboard-badge {
+    padding: 7px 11px;
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.leaderboard-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.leaderboard-table th {
+    padding: 14px 12px;
+    background: #f9fafb;
+    color: #6b7280;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.leaderboard-table td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #374151;
+}
+
+.leaderboard-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.leaderboard-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.leaderboard-rank {
+    font-weight: bold;
+    color: #4f46e5;
+}
+
+.leaderboard-user {
+    font-weight: 600;
+    color: #111827;
+}
+
+.leaderboard-total {
+    font-weight: bold;
+    color: #059669;
+    white-space: nowrap;
+}
+
+.leaderboard-message {
+    margin-bottom: 12px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.leaderboard-message:empty {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .leaderboard-container {
+        padding: 15px;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+}
+
 @media (max-width: 600px) {
 
     body {
