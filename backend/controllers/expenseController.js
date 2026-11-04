@@ -4,6 +4,7 @@ const sequelize=require('../utils/db-connection')
 
 const addExpense=async(req,res)=>{
     try {
+        // const transaction=sequelize.transaction()
         const {amount, category, description}=req.body;
         const expense=await Expense.create({
             amount:amount,

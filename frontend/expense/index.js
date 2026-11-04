@@ -2,7 +2,8 @@ const form = document.querySelector('#expenseForm');
 const api = 'http://localhost:3000/expense';
 const expensesList = document.querySelector('#expensesList');
 
-
+const descriptionInput = document.querySelector("#description");
+const categorySelect = document.querySelector("#category");
 
 const leaderboardBtn = document.querySelector('#leaderboardBtn');
 const leaderboardContainer = document.querySelector('#leaderboardContainer');
@@ -294,5 +295,32 @@ const deleteExpense = async (id) => {
         console.log(error);
     }
 };
+
+descriptionInput.addEventListener("blur", async () => {
+    const description = descriptionInput.value.trim();
+
+    if (!description) return;
+
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await axios.post(
+            "http://localhost:3000/expense/suggest-category",
+            {
+                description: description
+            },
+            {
+                headers: {
+                    authorization: token
+                }
+            }
+        );
+
+        categorySelect.value = response.data.category;
+
+    } catch (error) {
+        console.log("AI suggestion error:", error);
+    }
+});
 
 getExpense()
