@@ -5,11 +5,12 @@ const sequelize=require('../utils/db-connection')
 const addExpense=async(req,res)=>{
     try {
         // const transaction=sequelize.transaction()
-        const {amount, category, description}=req.body;
+        const {amount, category, description, note}=req.body;
         const expense=await Expense.create({
             amount:amount,
             category:category,
             description:description,
+            note:note,
             UserId:req.user.id
         })
         return res.status(201).json({
@@ -31,9 +32,9 @@ const getExpense=async(req,res)=>{
                 UserId : req.user.id  //req.user is a global object
             }
         });
-        if(expenses.length==0){
-            return res.status(404).send('No expense found');
-        }
+        // if(expenses.length==0){
+        //     return res.status(404).send('No expense found');
+        // }
         return res.status(200).json(expenses);
     } catch (error) {
         console.log(error);

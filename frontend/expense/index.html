@@ -13,6 +13,7 @@
 
         <div class="premium-section">
           <button id="buyPremiumBtn">Buy Premium</button>
+          <button id="logoutBtn">Logout</button>
 
           <div id="premiumUserSection" hidden>
             <span>You are a Premium User Now</span>
@@ -45,6 +46,16 @@
             />
           </div>
           <div class="form-group">
+            <label for="note">Note</label>
+            <input
+              type="text"
+              name="note"
+              id="note"
+              placeholder="Enter note here.."
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="category">Category</label>
             <select name="category" id="category" required>
               <option value="">Choose Category</option>
@@ -57,9 +68,28 @@
           <button type="submit">Add Expense</button>
         </form>
       </div>
+      <div class="page-size-container">
+        <label for="pageSize">Expenses per page:</label>
+
+        <select id="pageSize">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+          <option value="8">8</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+        </select>
+      </div>
       <div class="expenses-container">
         <h2>My Expenses</h2>
         <div id="expensesList"></div>
+        <div class="pagination">
+          <button id="prevBtn" disabled>Previous</button>
+          <span id="pageInfo">Page 1 of 1</span>
+          <button id="nextBtn" disabled>Next</button>
+        </div>
       </div>
 
       <!-- Leaderboard -->

@@ -11,6 +11,28 @@ const leaderboardList = document.querySelector('#leaderboardList');
 const leaderboardMessage = document.querySelector('#leaderboardMessage');
 
 
+let allExpenses = [];
+let currentPage = 1;
+
+const allowedPageSizes = [2, 3, 5, 8, 10, 20, 30, 40];
+
+const savedPageSize = Number(localStorage.getItem('expensesPerPage'));
+
+let expensesPerPage = allowedPageSizes.includes(savedPageSize)
+    ? savedPageSize
+    : 3;
+
+const pageSizeSelect = document.querySelector('#pageSize');
+
+pageSizeSelect.value = String(expensesPerPage);
+
+// Make sure the dropdown shows the saved preference
+pageSizeSelect.value = String(expensesPerPage);
+
+const prevBtn = document.querySelector('#prevBtn');
+const nextBtn = document.querySelector('#nextBtn');
+const pageInfo = document.querySelector('#pageInfo');
+
 const userApi = 'http://localhost:3000/users';
 
 async function loadPremiumStatus() {
@@ -230,10 +252,12 @@ form.addEventListener('submit',async(e)=>{
     const formData = new FormData(e.target);
     const amount=formData.get('amount');
     const description=formData.get('description');
+    const note = formData.get('note');
     const category=formData.get('category');
     const expense={
         amount:amount,
         description:description,
+        note:note,
         category:category,
     }
     try {
@@ -242,43 +266,107 @@ form.addEventListener('submit',async(e)=>{
             headers:{"authorization":token}
         })
         e.target.reset();
-        getExpense();
+        currentPage = 1;
+        await  getExpense();
     } catch (error) {
         console.log(error);
     }
 })
 
-const getExpense=async()=>{
+async function getExpense() {
     try {
-        const token = localStorage.getItem('token')
-        console.log("token from localStorage:", token);
-        const response=await axios.get(`${api}/get`,{
-            headers:{"authorization":token}
-        }) 
-        expensesList.innerHTML = '';
-        response.data.forEach((expense) => {
-            const div = document.createElement('div');
-            div.className = 'expense-card';
-            div.innerHTML = `
-                <div class="expense-info">
-                    <h3>${expense.description}</h3>
-                    <p>Category: ${expense.category}</p>
-                </div>
-                <div class="expense-amount">
-                    ₹${expense.amount}
-                </div>
-                <button 
-                    class="delete-btn" onclick="deleteExpense(${expense.id})">Delete
-                </button>
-            `;
-            expensesList.appendChild(div);
+        const token = localStorage.getItem('token');
+
+        const response = await axios.get(`${api}/get`, {
+            headers: {
+                authorization: token
+            }
         });
+
+        allExpenses = response.data;
+
+        const totalPages = Math.max(
+            1,
+            Math.ceil(allExpenses.length / expensesPerPage)
+        );
+
+        if (currentPage > totalPages) {
+            currentPage = totalPages;
+        }
+
+        displayExpenses();
+
     } catch (error) {
-        console.log(error);
-        expensesList.innerHTML = `
-            <p class="no-expense">No expenses</p>
-        `;
+        console.log('Get expense error:', error);
     }
+}
+
+function displayExpenses() {
+    expensesList.innerHTML = '';
+
+    const totalPages = Math.max(
+        1,
+        Math.ceil(allExpenses.length / expensesPerPage)
+    );
+
+    // Make sure currentPage is always a valid page
+    if (currentPage > totalPages) {
+        currentPage = totalPages;
+    }
+
+    if (currentPage < 1) {
+        currentPage = 1;
+    }
+
+    const startIndex = (currentPage - 1) * expensesPerPage;
+    const endIndex = startIndex + expensesPerPage;
+
+    const currentExpenses = allExpenses.slice(startIndex, endIndex);
+
+    currentExpenses.forEach(expense => {
+        const div = document.createElement('div');
+        div.className = 'expense-card';
+
+        const info = document.createElement('div');
+        info.className = 'expense-info';
+
+        const title = document.createElement('h3');
+        title.textContent = expense.description;
+
+        const category = document.createElement('p');
+        category.textContent = `Category: ${expense.category}`;
+
+        const note = document.createElement('p');
+        note.textContent = `Note: ${expense.note}`;
+
+        info.append(title, category, note);
+
+        const right = document.createElement('div');
+        right.className = 'expense-right';
+
+        const amount = document.createElement('span');
+        amount.className = 'expense-amount';
+        amount.textContent = `₹${expense.amount}`;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = 'Delete';
+
+        deleteBtn.addEventListener('click', () => {
+            deleteExpense(expense.id);
+        });
+
+        right.append(amount, deleteBtn);
+        div.append(info, right);
+
+        expensesList.appendChild(div);
+    });
+
+    // Update pagination information
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
 }
 
 
@@ -290,7 +378,7 @@ const deleteExpense = async (id) => {
                 "authorization": token
             }
         });
-        getExpense();
+        await getExpense();
     } catch (error) {
         console.log(error);
     }
@@ -321,6 +409,52 @@ descriptionInput.addEventListener("blur", async () => {
     } catch (error) {
         console.log("AI suggestion error:", error);
     }
+});
+
+const logoutBtn = document.querySelector('#logoutBtn');
+
+logoutBtn.addEventListener('click', () => {
+
+    // Remove current user's authentication details
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+
+    // Redirect to login page
+    window.location.href = '../login/index.html';
+
+});
+
+
+
+nextBtn.addEventListener('click', () => {
+
+    const totalPages = Math.ceil(
+        allExpenses.length / expensesPerPage
+    );
+
+    if (currentPage < totalPages) {
+        currentPage++;
+        displayExpenses();
+    }
+
+});
+
+
+prevBtn.addEventListener('click', () => {
+
+    if (currentPage > 1) {
+        currentPage--;
+        displayExpenses();
+    }
+
+});
+
+pageSizeSelect.addEventListener('change', () => {
+    expensesPerPage = Number(pageSizeSelect.value);
+    localStorage.setItem('expensesPerPage', expensesPerPage);
+    currentPage = 1;
+
+    displayExpenses();
 });
 
 getExpense()

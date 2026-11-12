@@ -303,6 +303,140 @@ button:hover {
     }
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.pagination button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+#pageInfo {
+    font-weight: bold;
+}
+
+/* Top bar buttons */
+.premium-section button {
+    width: auto;
+    padding: 10px 18px;
+}
+
+#logoutBtn {
+    background-color: #dc3545;
+}
+
+#logoutBtn:hover {
+    background-color: #b02a37;
+}
+
+/* Premium buttons */
+#buyPremiumBtn,
+#leaderboardBtn {
+    width: auto;
+}
+
+/* Expense cards */
+.expense-card {
+    width: 100%;
+    gap: 15px;
+}
+
+.expense-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.expense-info h3 {
+    overflow-wrap: anywhere;
+}
+
+.expense-right {
+    flex-shrink: 0;
+}
+
+/* Delete button */
+.delete-btn {
+    width: auto;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.pagination button {
+    width: auto;
+    min-width: 90px;
+    padding: 10px 16px;
+    background-color: #2563eb;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+.pagination button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+#pageInfo {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+
+    .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .premium-section {
+        justify-content: space-between;
+    }
+
+    .expense-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .expense-right {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .pagination {
+        gap: 10px;
+    }
+
+    .pagination button {
+        min-width: 75px;
+        padding: 9px;
+        font-size: 13px;
+    }
+}
+
 @media (max-width: 600px) {
 
     body {
